@@ -1,6 +1,8 @@
 package com.example.instagramclone
 
+import android.content.Intent
 import android.os.Bundle
+import android.widget.TextView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
@@ -11,25 +13,44 @@ import com.example.instagramclone.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityMainBinding
+    private lateinit var textView: TextView
+
+    private val onNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
+        when (item.itemId) {
+            R.id.nav_home -> {
+                textView.setText("Home")
+                return@OnNavigationItemSelectedListener true
+            }
+            R.id.nav_search -> {
+                textView.setText("Search")
+                return@OnNavigationItemSelectedListener true
+            }
+            R.id.nav_add_post -> {
+                textView.setText("Add Post")
+                return@OnNavigationItemSelectedListener true
+            }
+            R.id.nav_notifications -> {
+                textView.setText("Notifications")
+                return@OnNavigationItemSelectedListener true
+            }
+            R.id.nav_profile -> {
+                textView.setText("Profile")
+                return@OnNavigationItemSelectedListener true
+            }
+        }
+        false
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
 
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        val navView: BottomNavigationView = findViewById(R.id.nav_view)
+        textView = findViewById(R.id.message)
 
-        val navView: BottomNavigationView = binding.navView
+        navView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
 
-        val navController = findNavController(R.id.nav_host_fragment_activity_main)
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-        val appBarConfiguration = AppBarConfiguration(
-            setOf(
-                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications
-            )
-        )
-        setupActionBarWithNavController(navController, appBarConfiguration)
-        navView.setupWithNavController(navController)
+
     }
 }
